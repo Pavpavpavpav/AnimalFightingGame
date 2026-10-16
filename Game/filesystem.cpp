@@ -45,3 +45,29 @@ void saveData(string& data, int Line){
     }
 
 }
+
+string getData(int doc, int Line){
+
+    string filename;
+    if (doc == 1){
+        filename = "GameSave.txt";
+    }
+    else if (doc == 2){
+        filename= "Animals.txt";
+    } 
+    else {
+        return "ERROR! Bad file id in getData";
+    }
+
+    vector<string> currentdata;
+    string currentline;
+
+    ifstream inFile(filename);
+    while (getline(inFile, currentline)) {
+        currentdata.push_back(currentline);
+    }
+    inFile.close();
+
+    return currentdata[Line - 1];
+    
+}

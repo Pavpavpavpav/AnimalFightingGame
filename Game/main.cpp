@@ -67,7 +67,6 @@ int main(){
         clearScreen();
         userRegister();
 
-
         //Todo:
         //SelectAnimal();
 
