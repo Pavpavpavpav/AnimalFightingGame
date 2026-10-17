@@ -2,8 +2,8 @@
 #include <string>
 #include <limits>
 #include <vector>
+#include <random>
 #include "filesystem.h"
-
 
 
 using namespace std;
@@ -129,6 +129,37 @@ vector<string> ordinals = {"first", "second", "third", "fourth", "fifth"};
     cin.get();
 }
 
+void addItems(){
+    random_device rd;
+    mt19937 gen(rd());
+
+    discrete_distribution<int> dropchance({.50, .40, .10});
+    int addedstreats = dropchance(gen);
+    int totalsmalltreats = stoi(getData(1, 11)) + addedstreats;
+    int addedbigtreats = dropchance(gen);
+    int totalbigtreats = stoi(getData(1, 12)) + addedbigtreats;
+
+    discrete_distribution<int> dropchance2({.70, .30});
+    int addedtoys = dropchance2(gen);
+    int totaltoys = stoi(getData(1, 13)) + addedtoys;
+
+    cout << "You have recieved " << addedstreats << " small treats, you now have a total of " << totalsmalltreats << " small treats!" << endl;
+    string totalsmalltreatsstr = to_string(totalsmalltreats);
+    saveData(totalsmalltreatsstr, 11);
+    cout << "You have recieved " << addedbigtreats << " big treats, you now have a total of " << totalbigtreats << " big treats!" << endl;
+    string totalbigtreatsstr = to_string(totalbigtreats);
+    saveData(totalbigtreatsstr, 12);
+    cout << "You have recieved " << addedtoys << " toys, you now have a total of " << totaltoys << " toys!" << endl;
+    string totaltoysstr = to_string(totaltoys);
+    saveData(totaltoysstr, 13);
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Press any key to continue...";
+
+    cin.get();
+}
+
+
 int main(){
     int newgame = 1; //change with load function
 
@@ -143,13 +174,9 @@ int main(){
 
         selectAnimals();
         clearScreen();
-
         
-
-        
-     git config pull.rebase false
-     git pull origin main
-        
+        addItems();
+        clearScreen();
 
     }
     else {

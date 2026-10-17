@@ -83,7 +83,7 @@ You can edit the animals freely but the amount cannot be changed for now.
 
 Changing the values manually risks corruption, there is currently no system to prevent these corruptions, so be careful!
 
-If a problem happens when editing the Gamesave.txt document a blank one can be made in its place, or it can be deleted alltogether, as the game makes the document when it is first ran.
+If a problem happens when editing the Gamesave.txt document, it can be deleted alltogether, as the game makes the document when it is first ran.
 
 Before editing the Animals.txt document to add your own animals, create a back-up, as the document is not recreated when the game starts, in the case of the corruption of this document, the game might need to be re-installed.
 

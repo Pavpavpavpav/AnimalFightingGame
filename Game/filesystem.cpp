@@ -12,6 +12,9 @@ void createDatafile(){
 
     if (!filesystem::exists(filename)) {
         ofstream createNewFile(filename);
+         for (int i = 0; i < 13; i++) {
+            createNewFile << "0" << "\n";
+        }
         createNewFile.close(); 
     }
 }
