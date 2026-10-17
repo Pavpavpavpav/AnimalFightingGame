@@ -178,6 +178,12 @@ int main(){
         addItems();
         clearScreen();
 
+        //TODO
+        //while loop to repeat the game untill exit with options to use items, save and to start fight
+        //fight system
+        //inventory system with usable items before and during fights
+        //Names for the AI oppoenents and unique animal combos (pre set names with certain animals, possible new document that is read only (add option 3 to load that using getData()))
+
     }
     else {
 
