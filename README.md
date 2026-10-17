@@ -44,7 +44,11 @@ The "play-off" begins
         For now, the opponents animal will only be able to use their abillity, with the usage of items being planned for another date 
     This cycle repats until one person has all their animals enter a state of exaustion
     
+<<<<<<< HEAD
  After (if) the player has won the "play-off", the player gains more items that are put into their inventory and the cycle continues repeating
+=======
+After (if) the player has won the "play-off", the player gains more items that are put into their inventory and the cycle continues repeating
+>>>>>>> 8d297791d13347546eddff235a744824be4ad2d4
 
 # Editing the file saves
 
