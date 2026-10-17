@@ -10,6 +10,7 @@
     "-std=c++17",
     "${fileDirname}/main.cpp",
     "${fileDirname}/filesystem.cpp",
+    "${fileDirname}/battlesequence.cpp",
     "-o",
     "${fileDirname}/game"
 ],

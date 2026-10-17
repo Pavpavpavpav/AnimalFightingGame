@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "filesystem.h"
+#include "battlesequence.h"
 #include <filesystem>
 #include <vector>
 

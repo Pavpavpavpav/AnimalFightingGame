@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include "filesystem.h"
+#include "battlesequence.h"
 
 
 using namespace std;
@@ -153,9 +154,7 @@ void addItems(){
     string totaltoysstr = to_string(totaltoys);
     saveData(totaltoysstr, 13);
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Press any key to continue...";
-
     cin.get();
 }
 
@@ -178,6 +177,7 @@ int main(){
         addItems();
         clearScreen();
 
+        gameround();
         //TODO
         //while loop to repeat the game untill exit with options to use items, save and to start fight
         //fight system
