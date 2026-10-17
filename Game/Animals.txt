@@ -3,7 +3,7 @@ Fox
 Light
 24
 31
-Cat 
+Cat
 270
 Medium
 32

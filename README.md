@@ -72,9 +72,8 @@ The Animals.txt file saves the data of the all the different animals available t
     Line 4: Lowest possible dealt exaustion of the Animal
     Line 5: Highest possible dealt exaustion of the Animal
     (The format is repeated for every animal)
-    Last line: STOP (!IMPORTANT! Do not remove)
 
-When adding new animals, add them to the end of the file, as otherwise there might be a mismatch between the intended animal that was saved in GameSave.txt and the new animal holding that ID.
+You can edit the animals freely but the amount cannot be changed for now.
 
 # ! WARNING !
 
