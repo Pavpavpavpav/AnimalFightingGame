@@ -3,10 +3,11 @@
 #include <limits>
 #include <vector>
 #include <random>
+#include <sstream>
+#include <filesystem>
 #include "filesystem.h"
 #include "battlesequence.h"
 #include "inventorysystem.h"
-
 
 using namespace std;
 
@@ -19,6 +20,47 @@ void presskey() {
 void clearScreen() {
     cout << "\033[2J" << flush;
 }
+
+bool isNumber(string& str){
+    istringstream isn(str);
+    double test;
+
+    return (isn >> test) && isn.eof();
+}
+
+void fileCheck(){
+    const string gamesave = "GameSave.txt";
+    const string animals = "Animals.txt";
+
+    //Gamesave.txt checks
+    if (filesystem::exists(gamesave)){
+        for (int i = 2; i < 14; i++ ){
+            string str = getData(1, i);
+            bool test = isNumber(str);
+            if (test == 0){
+                cout << "Error: There is a letter in a number-only line in Gamesave.txt!" << endl;
+                cout << "Press any key to continue..." << endl;
+                cin.get();
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        int id1 = stoi(getData(1,3));
+        int id2 = stoi(getData(1,5));
+        int id3 = stoi(getData(1,7));
+        int id4 = stoi(getData(1,9));
+
+        if (id1 % 5 != 1 || id2 % 5 != 1 || id3 % 5 != 1 || id4 % 5 != 1 ){
+            cout << "ERROR! One of the animal id's in GameSave.txt is incorrect!" << endl;
+            cout << "Press any key to continue..." << endl;
+            cin.get();
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    // TODO: Implement checks for Animals.txt (Line number check, and contents of each line)
+}
+
 
 void title(){
     cout << "#########################" << endl;
@@ -157,6 +199,8 @@ void addItems(){
 
 
 int main(){
+
+    fileCheck();
 
     title();
     clearScreen();
