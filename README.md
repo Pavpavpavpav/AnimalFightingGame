@@ -80,3 +80,4 @@ If the problem exists within the GameSave.txt file, it can be deleted safely, as
 
 If the problem is in the Animals.txt file, the program needs to be redownloaded as there is not a backup of the file within the program (Yet)
 
+If any file is shorter than intended, the game will show an Segmentation Fail Code Dump error.

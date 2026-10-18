@@ -39,6 +39,7 @@ void fileCheck(){
             bool test = isNumber(str);
             if (test == 0){
                 cout << "Error: There is a letter in a number-only line in Gamesave.txt!" << endl;
+                cout << "Detected in line: " << i << endl;
                 cout << "Press any key to continue..." << endl;
                 cin.get();
                 exit(EXIT_FAILURE);
@@ -57,8 +58,57 @@ void fileCheck(){
             exit(EXIT_FAILURE);
         }
     }
+    else {
+       createDatafile();
+    }
 
-    // TODO: Implement checks for Animals.txt (Line number check, and contents of each line)
+    if(filesystem::exists(animals)){
+        int FileSize = getFileSize();
+        
+        if (FileSize == -1){
+            cout << "ERROR! Cannot open the Animals.txt file!" << endl;
+            cout << "Press any key to continue..." << endl;
+            cin.get();
+            exit(EXIT_FAILURE);
+        }
+        else if (FileSize > 60){
+            cout << "ERROR! Animals.txt is longer than expected (60 lines)!" << endl;
+            cout << "Detected " << FileSize << " lines." << endl;
+            cout << "Press any key to continue..." << endl;
+            cin.get();
+            exit(EXIT_FAILURE);
+        }
+        
+        for (int i = 1; i < 61; i++){
+            if (i % 5 != 1 && i % 5 != 3){
+                string str = getData(2, i);
+                bool isnum = isNumber(str);
+                if (isnum == 0){
+                    cout << "ERROR! There is a letter in an number-only line in Animals.txt!" << endl;
+                    cout << "Detected in line: " << i << endl;
+                    cout << "Press any key to continue..." << endl;
+                    cin.get();
+                    exit(EXIT_FAILURE);
+                }
+            }
+            if (i % 5 == 3){
+                string str = getData(2, i);
+                if (str != "Light" && str != "Medium" && str != "Heavy" ){
+                    cout << "ERROR! An animal was assigned an invalid class!" << endl;
+                    cout << "Detected in line: " << i << endl;
+                    cout << "Press any key to continue..." << endl;
+                    cin.get();
+                    exit(EXIT_FAILURE);
+                }
+            }
+        }
+    }
+    else {
+        cout << "ERROR! Animals.txt was not found!" << endl;
+        cout << "Press any key to continue..." << endl;
+        cin.get();
+        exit(EXIT_FAILURE);
+    }
 }
 
 
@@ -211,7 +261,6 @@ int main(){
     clearScreen();  
 
     if (newgame == 1){
-        createDatafile();
 
         userRegister();
         clearScreen();

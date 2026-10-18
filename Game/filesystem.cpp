@@ -9,6 +9,26 @@
 
 using namespace std;
 
+int getFileSize(){
+    const string filename = "Animals.txt";
+
+    ifstream file(filename);
+
+    if (!file.is_open()){
+        return -1;
+    }
+
+    int linecount = 0;
+    string currline;
+
+    while (getline(file, currline)){
+        linecount++;
+    }
+    
+    return linecount;
+    
+} 
+
 void createDatafile(){
     const string filename = "GameSave.txt";
 
