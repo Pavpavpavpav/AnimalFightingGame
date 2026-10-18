@@ -18,7 +18,7 @@ Opponent::Opponent(int numAnimals) {
     name = names[randnamenum(gen)];
 
     for (int i = 0; i < numAnimals; i++) {
-        uniform_int_distribution<int> randanimalid(1, 11);
+        uniform_int_distribution<int> randanimalid(0, 11);
         animalIDs.push_back(randanimalid(gen) * 5 + 1);
         animalExaustion.push_back(0);
     }

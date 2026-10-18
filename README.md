@@ -1,85 +1,82 @@
-# AnimalFightingGame
-A text-based game where you can make animals play with eachother (fight) until they are exausted (defeated)
-A project for the Hack Club Terra
+# Animal Fighting Game
+### For the Hack Club Terra Program
 
-# AI Statement
-99% of the code of the project is human-written, AI was used to aid in debugging when all other measures did not work.
+A text-based game where animals ~~fight~~ play with eachother until they are exausted.
+Reesmbles games like Pokemon (without the story part)
 
-# How to Play?
-Think of this game as a battle simulator similar to popular titles such as Pokemon
-Because the main theme of the game is the animals playing instead of fighting, familiar items have been renamed into variants that fit the theme better:
+<sub>***NO ANIMALS WERE HARMED!1!!11!!***</sub>
 
-Small Treat - Functions like a small health potion, removes 50 exaustion.
-Big Treat - Functions like a big health potion, removes 150 exaustion.
-Toy - Restores a pet's exaustion to 0 even if it has been exausted fully
+## How do I play the game???
 
-The exaustion system functions similarly to the health system in similar battle games, but instead of starting at a base value (Masimum health points), and falling to 0, every animal starts with 0 exaustion and gains exaustion trough playing (fighting), and lasts until it hits the game's equivalent of Max HP, Maximum Exaustion. Once a animal hits maximum exaustion it cannot be brught back into playing without using a Fast-Nap with it
+Playing the game is really simple, as it consists of 3 main phases:
 
-After each play, the player gains one win, and each of the animals which are not fully exausted lose 25 exaustion. The player also gains a random amount of items.
+1. Making your character by writing your name and selecting your animals or *loading your save file* (more on this later)
+2. Intermission, using items or starting the "play-offs"
+3. Engaging in ~~combat~~ playing with opponents until one emerges victorious   
 
-The animals are also divided into 3 classes:
-    Light - Have a high maximum exaustion but give out little exaustion themselves, 1.25 times the exaustion taken from Medium class animals, 0.75x from heavy animals
-    Medium - Moderate maximum exaustion and the amount of exaustion they give out, 1.25 times the exaustion taken from Heavy class Animals, 0.75x from light class animals
-    Heavy - Low high exaustion but also give out a lot of exaustion to other animals, 1.25 times the exaustion taken from Light class animals, 0.75 from moderate class animals.
+The process is repeated until all your pets are exausted and unable to play anymore.
 
-# How does the game progress?
+## What are the different items in the game and what do they do???
 
-Title screen - New Game or (WIP) Load Game
+The game (*so far*) has 3 unique items: 
 
-New Game 
-    Input your name
-    Select your animals (4)
-    Recieve a starter set of items
+1. Small treats - Feeds your animal and lets them play longer! 50 exaustion is subtracted from the exaustion meter
+2. Big treats - Like small treats, though they subtract more! 150 exaustion to be exact
+3. Toys - Rare item to recieve, has the ability to set the exaustion bar to 0 even for *fully exausted* animals.
 
-(Repeats from now on until defeat or exiting the game)
+Small and Big treats cannot be used on animals that have their exaustion bar full because ~~I said so~~ of balancing reasons.
 
-Choose to use items, quit, or play with an AI opponent
-The AI opponent is assigned a random number of animals between 2 and 4
-The "play-off" begins
-    On your turn, you can choose to:
-        Switch your current animal
-        Open your inventory and use an item
-        Use an ability of the pet (Adds exaustion to the opponents animal)
-    After your turn, the AI opponent commands their animal to use its ability
-        For now, the opponents animal will only be able to use their abillity, with the usage of items being planned for another date 
-    This cycle repats until one person has all their animals enter a state of exaustion
-    
-    After the play-off, the player recieves more items and the cycle repeats.
+Items are recieved once after completing the first phase of the game (Making your character) and after each won battle. The drop rates are as follows:
+- Small and Big treats
+    - 0: 60%, 1: 30%, 2: 10%
+- Toys
+    - 0: 70%, 1: 30%
 
-# Editing the file saves
+## Why are my pets already at 0/### exaustion??? Is this a bug?
 
-The game saves its data about the player and the different animals available using text files.
+Unlike in other games, where similar healthbar mechanics start at 100%, the exaustion mechanic works the opposite in this game.
 
-The Gamesave.txt file saves the data of the player and their animals in the following format:
-    Line 1: Name of the player
-    Line 2: Number of wins
-    Line 3: Animal 1 ID
-    Line 4: Animal 1 Exaustion
-    Line 5: Animal 2 ID
-    Line 6: Animal 2 Exaustion
-    Line 7: Animal 3 ID
-    Line 8: Animal 3 Exaustion
-    Line 9: Animal 4 ID
-    Line 10: Animal 4 Exaustion
-    Line 11: Number of Small Treats
-    Line 12: Number of Big Treats
-    Line 13: Number of Fast-Naps
+In this game, the animals start with no exaustion at all, slowly gaining exaustion as they play with other pets. The items are there to lower the exaustion.
 
-The Animals.txt file saves the data of the all the different animals available to the player in this format:
-    Line 1: Animal Name (Line # is the id of the animal)
-    Line 2: Animal Maximum Exaustion
-    Line 3: Animal Class (Light, Medium or Heavy)
-    Line 4: Lowest possible dealt exaustion of the Animal
-    Line 5: Highest possible dealt exaustion of the Animal
-    (The format is repeated for every animal)
+## How does my progress save?
 
-You can edit the animals freely but the amount cannot be changed for now.
+The progress of the player is saved in the GameSave.txt file, if one is missing, the game will automatically make one for the player.
 
-# ! WARNING !
+Additionally, the animals are saved in the Animals.txt file, which is accessed frequently to get the information about all the animals
 
-Changing the values manually risks corruption, there is currently no system to prevent these corruptions, so be careful!
+## Can I edit the files?
 
-If a problem happens when editing the Gamesave.txt document, it can be deleted alltogether, as the game makes the document when it is first ran.
+Yes! But be aware, both files follow a strict format when writing data:
 
-Before editing the Animals.txt document to add your own animals, create a back-up, as the document is not recreated when the game starts, in the case of the corruption of this document, the game might need to be re-installed.
+- The GameSave.txt file follows this format:
+    - Line 1: Name of the User
+    - Line 2: The number of wins the player has
+    - Line 3: ID of the 1st animal the player owns 
+    - Line 4: Current Exaustion of the 1st animal
+    - Line 5: ID of the 2nd animal the player owns
+    - Line 6: Current Exaustion of the 2nd animal
+    - Line 7: ID of the 3rd animal the player owns
+    - Line 8: Current Exaustion of the 3rd animal
+    - Line 9: ID of the 4th animal the player owns
+    - Line 10: Current Exaustion of the 4th animal
+    - Line 11: The number of small treats the player has
+    - Line 12: The number of big treats the player has
+    - Line 13: The number of toys the player has
+
+- The Animals.txt follows this format: (N is a number between 0 & 11)
+    - Line (N*5+1): The name of the animal (The line # is also its ID)
+    - Line (N*5+2): The maximum exaustion of the animal
+    - Line (N*5+3): The class of the animal
+    - Line (N*5+4): The minimum exaustion the animal can give to others
+    - Line (N*5+5): The maximum exaustion the animal can give to others
+
+***!The Animals.txt file must end at line 60, otherwise an error will happen!***
+
+## (I think) My files are corrupted! What do I do???
+
+If the game is showing an error code due to corruption of the files, or the game is outputting nonsense (Such as the exaustion of an animal being "Anastasia"), the files are most likely corrupted.
+
+If the problem exists within the GameSave.txt file, it can be deleted safely, as the game will recreate it with the start of a new game.
+
+If the problem is in the Animals.txt file, the program needs to be redownloaded as there is not a backup of the file within the program (Yet)
 
