@@ -4,6 +4,8 @@
 #include <vector>
 #include "battlesequence.h"
 #include "filesystem.h"
+#include "inventorysystem.h"
+#include "main.h"
 
 using namespace std;
 
@@ -61,20 +63,6 @@ bool Opponent::isAnimalExausted(int animalIndex){
 int gameround(){
     random_device rd;
     mt19937 gen(rd());
-
-    Opponent opponent(2);
-    cout << "Opponent Name: " << opponent.getName() << endl;
-    cout << "Number of Animals: " << opponent.getNumberofAnimals() << endl;
-    cout << "Animal 1 ID: " << opponent.getAnimalID(0) << endl;
-    cout << "Animal 1 Exhaustion: " << opponent.getExaustion(0) << endl;
-    opponent.changeExaustion(0, 39);
-    cout << "Animal 1 Exhaustion after change: " << opponent.getExaustion(0) << endl;
-    cout << "Animal 2 ID: " << opponent.getAnimalID(1) << endl;
-    cout << "Animal 2 Exhaustion: " << opponent.getExaustion(1) << endl;
-    opponent.changeExaustion(1, 194814148198);
-    cout << "Animal 2 Exhaustion after change: " << opponent.getExaustion(1) << endl;
-    cout << "Animal 1 is exhausted: " << opponent.isAnimalExausted(0) << endl;
-    cout << "Animal 2 is exhausted: " << opponent.isAnimalExausted(1) << endl;
 
 
     return 0;

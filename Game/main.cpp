@@ -5,9 +5,16 @@
 #include <random>
 #include "filesystem.h"
 #include "battlesequence.h"
+#include "inventorysystem.h"
 
 
 using namespace std;
+
+void presskey() {
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << endl << "Press any key to continue...";
+    cin.get();
+}
 
 void clearScreen() {
     cout << "\033[2J" << flush;
@@ -17,7 +24,7 @@ void title(){
     cout << "#########################" << endl;
     cout << "| Animal Fighting Game  |" << endl;
     cout << "| version: beta         |" << endl;
-    cout << "#########################" << endl << endl << endl << endl;
+    cout << "#########################" << endl << endl;
 
 
     cout << "Have you read the README document yet? (Y/N): ";
@@ -31,11 +38,7 @@ void title(){
         }
         else if (answer == 'N'){
             cout << "It is recommended you do so!" << endl;
-
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Press any key to continue...";
-
-            cin.get();
+            presskey();
             break;
         }
         else {
@@ -56,10 +59,7 @@ int userRegister(){
 
     cout << "Welcome " << username << ", are you ready to select your animals?" << endl;
     
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Press any key to continue...";
-
-            cin.get();
+    presskey();
 
     return 0;
 
@@ -101,8 +101,8 @@ vector<string> ordinals = {"first", "second", "third", "fourth", "fifth"};
             if (choice == 'Y'){
                 string idstr = to_string(id);
                 saveData(idstr, saveto);
-                string animalmaxexaustion = getData(2, id+1);
-                saveData(animalmaxexaustion, saveto+1);
+                string zero = "0";
+                saveData(zero, saveto + 1);
                 saveto += 2;
                 d++;
             }
@@ -119,15 +119,12 @@ vector<string> ordinals = {"first", "second", "third", "fourth", "fifth"};
 
     cout << "Meet your animals!: " << endl;
     for (int i = 3; i < 11; i+=2){
-        cout << "Animal: " << getData(2, stoi(getData(1,i))) << ", Max Exaustion: " << getData(1,i+1) << ", Class: " << getData(2, stoi(getData(1,i))+2) << ", Min - Max Exaustion Dealt: " << getData(2, stoi(getData(1,i))+3) << " - " << getData(2, stoi(getData(1,i))+4) << endl;
+        cout << "Animal: " << getData(2, stoi(getData(1,i))) << ", Max Exaustion: " << getData(2, stoi(getData(1,i))+1) << ", Class: " << getData(2, stoi(getData(1,i))+2) << ", Min - Max Exaustion Dealt: " << getData(2, stoi(getData(1,i))+3) << " - " << getData(2, stoi(getData(1,i))+4) << endl;
     }
 
     cout << endl << "Are you ready to go into a 'play-off' with your animals? ";
     
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << "Press any key to continue...";
-
-    cin.get();
+    presskey();
 }
 
 void addItems(){
@@ -160,13 +157,17 @@ void addItems(){
 
 
 int main(){
-    int newgame = 1; //change with load function
+
+    title();
+    clearScreen();
+
+    cout << "Would you like to start a new game or load a previous save? (1 for new game, 2 for load): ";
+    int newgame;
+    cin >> newgame;
+    clearScreen();  
 
     if (newgame == 1){
         createDatafile();
-
-        title();
-        clearScreen();
 
         userRegister();
         clearScreen();
@@ -175,18 +176,57 @@ int main(){
         clearScreen();
         
         addItems();
-        clearScreen();
-
-        gameround();
-        //TODO
-        //while loop to repeat the game untill exit with options to use items, save and to start fight
-        //fight system
-        //inventory system with usable items before and during fights
-        //Names for the AI oppoenents and unique animal combos (pre set names with certain animals, possible new document that is read only (add option 3 to load that using getData()))
-
-    }
+        
+    }    
     else {
+        cout << "The following data was loaded from the save:" << endl;
+        cout << "Name: " << getData(1, 1) << " Wins: " << getData(1, 2) << endl;
+        cout << "Animal 1: " << getData(2, stoi(getData(1,3))) << " with " << getData(1, 4) << "/" << getData(2, stoi(getData(1,3))+1) << " exaustion" << endl;
+        cout << "Animal 2: " << getData(2, stoi(getData(1,5))) << " with " << getData(1, 6) << "/" << getData(2, stoi(getData(1,5))+1) << " exaustion" << endl;
+        cout << "Animal 3: " << getData(2, stoi(getData(1,7))) << " with " << getData(1, 8) << "/" << getData(2, stoi(getData(1,7))+1) << " exaustion" << endl;
+        cout << "Animal 4: " << getData(2, stoi(getData(1,9))) << " with " << getData(1, 10) << "/" << getData(2, stoi(getData(1,9))+1) << " exaustion" << endl;
+        cout << "Small Treats: " << getData(1, 11) << " Big Treats: " << getData(1, 12) << " Toys: " << getData(1, 13) << endl;
+        cout << endl << "Is this correct? (Y/N): ";
+
+        char answer;
+        cin >> answer;
+
+        if (answer == 'N'){
+            cout << "Please delete the GameSave.txt file and restart the game to start a new game." << endl;
+            presskey();
+            return 0;
+        }
 
     }
+
+    while(true){
+        clearScreen();
+        cout << "INTERMISSION" << endl;
+        cout << "Please select an option: " << endl;
+        cout << "P - Go into a play-off with your animals" << endl;
+        cout << "I - Open inventory" << endl;
+        cout << "Q - Quit the game (Game is saved automatically)" << endl;
+
+        char choice;
+        cin >> choice;
+
+        if (choice == 'P'){
+            gameround();
+        }
+        else if (choice == 'I'){
+            openInventory();
+        }
+        else if (choice == 'Q'){
+            cout << "Thank you for playing!";
+            presskey();
+            return 0;
+        }
+        else {
+            cout << endl << "Please input a valid option!";
+            presskey();
+        }
+    }
+
+    
     
 }

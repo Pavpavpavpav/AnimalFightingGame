@@ -5,15 +5,16 @@
             "label": "C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
-    "-fdiagnostics-color=always",
-    "-g",
-    "-std=c++17",
-    "${fileDirname}/main.cpp",
-    "${fileDirname}/filesystem.cpp",
-    "${fileDirname}/battlesequence.cpp",
-    "-o",
-    "${fileDirname}/game"
-],
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++17",
+                "${fileDirname}/main.cpp",
+                "${fileDirname}/filesystem.cpp",
+                "${fileDirname}/battlesequence.cpp",
+                "${fileDirname}/inventorysystem.cpp",
+                "-o",
+                "${fileDirname}/game"
+            ],
             "options": {
                 "cwd": "${fileDirname}"
             },

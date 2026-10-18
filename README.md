@@ -11,7 +11,7 @@ Because the main theme of the game is the animals playing instead of fighting, f
 
 Small Treat - Functions like a small health potion, removes 50 exaustion.
 Big Treat - Functions like a big health potion, removes 150 exaustion.
-Fast-Nap - Restores a pet's exaustion to 0 even if it has been exausted fully
+Toy - Restores a pet's exaustion to 0 even if it has been exausted fully
 
 The exaustion system functions similarly to the health system in similar battle games, but instead of starting at a base value (Masimum health points), and falling to 0, every animal starts with 0 exaustion and gains exaustion trough playing (fighting), and lasts until it hits the game's equivalent of Max HP, Maximum Exaustion. Once a animal hits maximum exaustion it cannot be brught back into playing without using a Fast-Nap with it
 
@@ -33,7 +33,7 @@ New Game
 
 (Repeats from now on until defeat or exiting the game)
 
-Choose to save the game, quit, or play with an AI opponent
+Choose to use items, quit, or play with an AI opponent
 The AI opponent is assigned a random number of animals between 2 and 4
 The "play-off" begins
     On your turn, you can choose to:
@@ -44,11 +44,7 @@ The "play-off" begins
         For now, the opponents animal will only be able to use their abillity, with the usage of items being planned for another date 
     This cycle repats until one person has all their animals enter a state of exaustion
     
-<<<<<<< HEAD
- After (if) the player has won the "play-off", the player gains more items that are put into their inventory and the cycle continues repeating
-=======
-After (if) the player has won the "play-off", the player gains more items that are put into their inventory and the cycle continues repeating
->>>>>>> 8d297791d13347546eddff235a744824be4ad2d4
+    After the play-off, the player recieves more items and the cycle repeats.
 
 # Editing the file saves
 
