@@ -180,6 +180,41 @@ int gameround(){
                 usedturn = 1;
             }
         }
+        else if (choice == 'C'){
+            clearScreen();
+
+            cout << "Select the animal you want to switch to: " << endl;
+            cout << "1. - " << getData(2, stoi(getData(1,3))) << " with " << getData(1,4) << "/" << getData(2,stoi(getData(1,3))+1) << " exhaustion" << endl;
+            cout << "2. - " << getData(2, stoi(getData(1,5))) << " with " << getData(1,6) << "/" << getData(2,stoi(getData(1,5))+1) << " exhaustion" << endl;
+            cout << "3. - " << getData(2, stoi(getData(1,7))) << " with " << getData(1,8) << "/" << getData(2,stoi(getData(1,7))+1) << " exhaustion" << endl;
+            cout << "4. - " << getData(2, stoi(getData(1,9))) << " with " << getData(1,10) << "/" << getData(2,stoi(getData(1,9))+1) << " exhaustion" << endl;
+            
+            int selection;
+            cin >> selection;
+            
+            int selectedid = stoi(getData(1, 2*selection +1));
+            int selectedidexh = stoi(getData(1, 2*selection + 2));
+            int selectedidmexh = stoi(getData(2, selectedid + 1));
+
+            clearScreen();
+            if (selectedidexh >= selectedidmexh){
+                cout << "You cannot switch to a fully exhausted animal!" << endl;
+                presskey();
+            }
+            else if (selection == curranimal){
+                cout << "You have already selected this animal!" << endl;
+                presskey();
+            }
+            else {
+                cout << "You have switched to your " << getData(2, selectedid) << "!" << endl;
+                cout << selectedidexh << " " << selectedidmexh;
+                curranimal = selection;
+                presskey();
+                usedturn = 1;
+
+            }
+            
+        }
         
 
     }
