@@ -36,34 +36,132 @@ int Opponent::getNumberofAnimals() {
 }
 
 int Opponent::getAnimalID(int animalIndex){
-    return animalIDs[animalIndex];
+    return animalIDs[animalIndex - 1];
 }
 
 int Opponent::getExaustion(int animalIndex){
-    return animalExaustion[animalIndex];
+    return animalExaustion[animalIndex - 1];
 }
 
-void Opponent::changeExaustion(int animalIndex, int change){
-    int maxExhaustion = stoi(getData(2, animalIDs[animalIndex] + 1));
-    if (animalExaustion[animalIndex] + change < maxExhaustion) {
-        animalExaustion[animalIndex] += change;
-    }
-    else {
-        animalExaustion[animalIndex] = maxExhaustion;
-    }
+void Opponent::changeExaustion(int animalIndex, int to){
+    animalExaustion[animalIndex - 1] = to;
 }
 
 bool Opponent::isAnimalExausted(int animalIndex){
-    int maxExhaustion = stoi(getData(2, animalIDs[animalIndex] + 1));
-    return animalExaustion[animalIndex] >= maxExhaustion;
+    int maxExhaustion = stoi(getData(2, animalIDs[animalIndex - 1] + 1));
+    return animalExaustion[animalIndex - 1] >= maxExhaustion;
 }
 
+bool isExausted(int id){
+    int exaustion = stoi(getData(1, 2 * id + 2));
+    int animalid = stoi(getData(1, 2 * id + 1));
+    int maxexaustion = stoi(getData(2, animalid + 1));
 
+    if (exaustion >= maxexaustion){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 int gameround(){
     random_device rd;
     mt19937 gen(rd());
 
+    uniform_int_distribution<int> animals(2, 4);
+    Opponent opponent(animals(gen)); 
 
-    return 0;
+    string playername = getData(1,1);
+    int curranimal;
+    int curranimalopp = 1;
+
+    if (isExausted(1) == 0){
+        curranimal = 1;
+    }
+    else if (isExausted(2) == 0){
+        curranimal = 2;
+    }
+    else if (isExausted(3) == 0){
+        curranimal = 3;
+    }
+    else if (isExausted(4) == 0){
+        curranimal = 4;
+    }
+    else {
+        clearScreen();
+        cout << "You cannot battle without any non-exausted animals! Please create a new save!" << endl;
+        presskey();
+        exit(EXIT_SUCCESS);
+    }
+
+    while(true){
+        string playername = getData(1, 1);
+        int playeranimalid = stoi(getData(1, 2 * curranimal + 1));
+        int exaustionp = stoi(getData(1,2 * curranimal + 2));
+        string playeranimalname = getData(2, playeranimalid);
+        int maxexaustionp = stoi(getData(2, playeranimalid + 1));
+        string animalclassp = getData(2, playeranimalid + 2);
+
+        string oppname = opponent.getName();
+        int oppanimalid = opponent.getAnimalID(curranimalopp);
+        string oppanimalname = getData(2, oppanimalid);
+        int exaustionopp = opponent.getExaustion(curranimalopp);
+        int maxexaustionopp = stoi(getData(2, oppanimalid + 1));
+        string animalclassopp = getData(2, oppanimalid + 2);
+        bool oppexausted = 0;
+
+        cout << "PLAY-OFF" << endl;
+        cout << endl;
+        cout << playername << endl;
+        cout << playeranimalname << " with " << exaustionp << "/" << maxexaustionp << " exaustion" << endl;
+        cout << "versus" << endl;
+        cout << oppname << endl;
+        cout << oppanimalname << " with " << exaustionopp << "/" << maxexaustionopp << " exaustion" << endl;
+        cout << "A - play, B - Inventory, C - Switch Animal" << endl;
+
+        char choice;
+        cin >> choice;
+
+        bool usedturn = 0;
+        clearScreen();
+
+        if (choice = 'A'){
+            int plminhit = stoi(getData(2, playeranimalid + 3));
+            int plmaxhit = stoi(getData(2, playeranimalid + 4));
+
+            uniform_int_distribution<int> hitfor(plminhit, plmaxhit);
+            int hit = hitfor(gen);
+
+            if (animalclassp == "Light" && animalclassopp == "Heavy" || animalclassp == "Medium" && animalclassopp == "Light" || animalclassp == "Heavy" && animalclassopp == "Medium"){
+                hit = hit * 1.25;
+                cout << "The " << animalclassp << " " << playeranimalname << " exausts the " << animalclassopp << " " << oppanimalname << " more!" << endl;
+            }
+            else if (animalclassp == "Light" && animalclassopp == "Medium" || animalclassp == "Medium" && animalclassopp == "Heavy" || animalclassp == "Heavy" && animalclassopp == "Light"){
+                hit = hit * .75;
+                cout << "The " << animalclassp << " " << playeranimalname << " exausts the " << animalclassopp << " " << oppanimalname << " less!" << endl;
+            }
+            exaustionopp += hit;  
+
+            if (exaustionopp > maxexaustionopp){
+                cout << "Your " << playeranimalname << " dealt " << hit << " exaustion to the opponent's " << oppanimalname << endl;
+                cout << "The opponent's " << oppanimalname << " has been exausted." << endl;
+
+                opponent.changeExaustion(curranimalopp, maxexaustionopp);
+                oppexausted = 1;
+            }
+            else {
+                cout << "Your " << playeranimalname << " dealt " << hit << " exaustion to the opponent's " << oppanimalname << endl;
+                cout << "The opponent's " << oppanimalname << " now has " << exaustionopp << " exaustion" << endl;
+                opponent.changeExaustion(curranimalopp, exaustionopp);
+            }
+
+            presskey();
+            usedturn = 1;
+        }
+
+        
+
+    }
+
 }
