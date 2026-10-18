@@ -1,4 +1,4 @@
 #pragma once
 
-void UseItem(int itemID);
-void openInventory();
+int UseItem(int itemID, int fromgame);
+int openInventory(int fromgame);

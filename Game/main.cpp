@@ -166,11 +166,11 @@ vector<string> ordinals = {"first", "second", "third", "fourth", "fifth"};
     while(i < 61){
         cout << "ID " << i << ", Animal: " << getData(2,i);
         i++;
-        cout << ", Max Exaustion: " << getData(2,i);
+        cout << ", Max Exhaustion: " << getData(2,i);
         i++;
         cout << ", Class: " << getData(2,i);
         i++;
-        cout << ", Min - Max Exaustion Dealt: " << getData(2,i);
+        cout << ", Min - Max Exhaustion Dealt: " << getData(2,i);
         i++;
         cout << " - " << getData(2,i) << endl;
         i++;
@@ -211,7 +211,7 @@ vector<string> ordinals = {"first", "second", "third", "fourth", "fifth"};
 
     cout << "Meet your animals!: " << endl;
     for (int i = 3; i < 11; i+=2){
-        cout << "Animal: " << getData(2, stoi(getData(1,i))) << ", Max Exaustion: " << getData(2, stoi(getData(1,i))+1) << ", Class: " << getData(2, stoi(getData(1,i))+2) << ", Min - Max Exaustion Dealt: " << getData(2, stoi(getData(1,i))+3) << " - " << getData(2, stoi(getData(1,i))+4) << endl;
+        cout << "Animal: " << getData(2, stoi(getData(1,i))) << ", Max Exhaustion: " << getData(2, stoi(getData(1,i))+1) << ", Class: " << getData(2, stoi(getData(1,i))+2) << ", Min - Max Exhaustion Dealt: " << getData(2, stoi(getData(1,i))+3) << " - " << getData(2, stoi(getData(1,i))+4) << endl;
     }
 
     cout << endl << "Are you ready to go into a 'play-off' with your animals? ";
@@ -274,10 +274,10 @@ int main(){
     else {
         cout << "The following data was loaded from the save:" << endl;
         cout << "Name: " << getData(1, 1) << " Wins: " << getData(1, 2) << endl;
-        cout << "Animal 1: " << getData(2, stoi(getData(1,3))) << " with " << getData(1, 4) << "/" << getData(2, stoi(getData(1,3))+1) << " exaustion" << endl;
-        cout << "Animal 2: " << getData(2, stoi(getData(1,5))) << " with " << getData(1, 6) << "/" << getData(2, stoi(getData(1,5))+1) << " exaustion" << endl;
-        cout << "Animal 3: " << getData(2, stoi(getData(1,7))) << " with " << getData(1, 8) << "/" << getData(2, stoi(getData(1,7))+1) << " exaustion" << endl;
-        cout << "Animal 4: " << getData(2, stoi(getData(1,9))) << " with " << getData(1, 10) << "/" << getData(2, stoi(getData(1,9))+1) << " exaustion" << endl;
+        cout << "Animal 1: " << getData(2, stoi(getData(1,3))) << " with " << getData(1, 4) << "/" << getData(2, stoi(getData(1,3))+1) << " exhaustion" << endl;
+        cout << "Animal 2: " << getData(2, stoi(getData(1,5))) << " with " << getData(1, 6) << "/" << getData(2, stoi(getData(1,5))+1) << " exhaustion" << endl;
+        cout << "Animal 3: " << getData(2, stoi(getData(1,7))) << " with " << getData(1, 8) << "/" << getData(2, stoi(getData(1,7))+1) << " exhaustion" << endl;
+        cout << "Animal 4: " << getData(2, stoi(getData(1,9))) << " with " << getData(1, 10) << "/" << getData(2, stoi(getData(1,9))+1) << " exhaustion" << endl;
         cout << "Small Treats: " << getData(1, 11) << " Big Treats: " << getData(1, 12) << " Toys: " << getData(1, 13) << endl;
         cout << endl << "Is this correct? (Y/N): ";
 
@@ -307,7 +307,7 @@ int main(){
             gameround();
         }
         else if (choice == 'I'){
-            openInventory();
+            openInventory(0);
         }
         else if (choice == 'Q'){
             cout << "Thank you for playing!";

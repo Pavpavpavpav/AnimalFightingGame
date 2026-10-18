@@ -90,10 +90,12 @@ int gameround(){
     }
     else {
         clearScreen();
-        cout << "You cannot battle without any non-exausted animals! Please create a new save!" << endl;
+        cout << "You cannot battle without any non-exhausted animals! Please create a new save!" << endl;
         presskey();
         exit(EXIT_SUCCESS);
     }
+
+    bool usedturn = 0;
 
     while(true){
         string playername = getData(1, 1);
@@ -111,22 +113,35 @@ int gameround(){
         string animalclassopp = getData(2, oppanimalid + 2);
         bool oppexausted = 0;
 
+        clearScreen();
+
+        if (usedturn == 0){
+            cout << "A turn did not pass. (placeholder)" << endl;
+            presskey();
+        }
+        else {
+            cout << "A turn has passed. (placeholder)" << endl;
+            presskey();
+        }
+
+        clearScreen();
+
         cout << "PLAY-OFF" << endl;
         cout << endl;
         cout << playername << endl;
-        cout << playeranimalname << " with " << exaustionp << "/" << maxexaustionp << " exaustion" << endl;
+        cout << playeranimalname << " with " << exaustionp << "/" << maxexaustionp << " exhaustion" << endl;
         cout << "versus" << endl;
         cout << oppname << endl;
-        cout << oppanimalname << " with " << exaustionopp << "/" << maxexaustionopp << " exaustion" << endl;
+        cout << oppanimalname << " with " << exaustionopp << "/" << maxexaustionopp << " exhaustion" << endl;
         cout << "A - play, B - Inventory, C - Switch Animal" << endl;
 
         char choice;
         cin >> choice;
 
-        bool usedturn = 0;
+        usedturn = 0;
         clearScreen();
 
-        if (choice = 'A'){
+        if (choice == 'A'){
             int plminhit = stoi(getData(2, playeranimalid + 3));
             int plmaxhit = stoi(getData(2, playeranimalid + 4));
 
@@ -135,31 +150,36 @@ int gameround(){
 
             if (animalclassp == "Light" && animalclassopp == "Heavy" || animalclassp == "Medium" && animalclassopp == "Light" || animalclassp == "Heavy" && animalclassopp == "Medium"){
                 hit = hit * 1.25;
-                cout << "The " << animalclassp << " " << playeranimalname << " exausts the " << animalclassopp << " " << oppanimalname << " more!" << endl;
+                cout << "The " << animalclassp << " " << playeranimalname << " exhausts the " << animalclassopp << " " << oppanimalname << " more!" << endl;
             }
             else if (animalclassp == "Light" && animalclassopp == "Medium" || animalclassp == "Medium" && animalclassopp == "Heavy" || animalclassp == "Heavy" && animalclassopp == "Light"){
                 hit = hit * .75;
-                cout << "The " << animalclassp << " " << playeranimalname << " exausts the " << animalclassopp << " " << oppanimalname << " less!" << endl;
+                cout << "The " << animalclassp << " " << playeranimalname << " exhausts the " << animalclassopp << " " << oppanimalname << " less!" << endl;
             }
             exaustionopp += hit;  
 
             if (exaustionopp > maxexaustionopp){
-                cout << "Your " << playeranimalname << " dealt " << hit << " exaustion to the opponent's " << oppanimalname << endl;
-                cout << "The opponent's " << oppanimalname << " has been exausted." << endl;
+                cout << "Your " << playeranimalname << " dealt " << hit << " exhaustion to the opponent's " << oppanimalname << endl;
+                cout << "The opponent's " << oppanimalname << " has been exhausted." << endl;
 
                 opponent.changeExaustion(curranimalopp, maxexaustionopp);
                 oppexausted = 1;
             }
             else {
-                cout << "Your " << playeranimalname << " dealt " << hit << " exaustion to the opponent's " << oppanimalname << endl;
-                cout << "The opponent's " << oppanimalname << " now has " << exaustionopp << " exaustion" << endl;
+                cout << "Your " << playeranimalname << " dealt " << hit << " exhaustion to the opponent's " << oppanimalname << endl;
+                cout << "The opponent's " << oppanimalname << " now has " << exaustionopp << " exhaustion" << endl;
                 opponent.changeExaustion(curranimalopp, exaustionopp);
             }
 
             presskey();
             usedturn = 1;
         }
-
+        else if (choice == 'B'){
+            bool itemused = openInventory(1);
+            if (itemused == 1){
+                usedturn = 1;
+            }
+        }
         
 
     }

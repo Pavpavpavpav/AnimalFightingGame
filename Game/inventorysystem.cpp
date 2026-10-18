@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void UseItem(int itemID) {
+int UseItem(int itemID, int fromgame) {
     string itemselected;
     if (itemID == 1) {
         itemselected = "small treat";
@@ -20,10 +20,10 @@ void UseItem(int itemID) {
     while (true){
         clearScreen();
         cout << "Please choose the animal you would like to use the " << itemselected << " (" << getData(1, 10 + itemID) << " remaining): " << endl;
-        cout << "1 - " << getData(2, stoi(getData(1,3))) << " with " << getData(1,4) << "/" << getData(2,stoi(getData(1,3)) + 1) << " exaustion" <<endl;
-        cout << "2 - " << getData(2, stoi(getData(1,5))) << " with " << getData(1,6) << "/" << getData(2,stoi(getData(1,5)) + 1) << " exaustion" << endl;
-        cout << "3 - " << getData(2, stoi(getData(1,7))) << " with " << getData(1,8) << "/" << getData(2,stoi(getData(1,7)) + 1) << " exaustion" << endl;
-        cout << "4 - " << getData(2, stoi(getData(1,9))) << " with " << getData(1,10) << "/" << getData(2,stoi(getData(1,9)) + 1) << " exaustion" << endl;
+        cout << "1 - " << getData(2, stoi(getData(1,3))) << " with " << getData(1,4) << "/" << getData(2,stoi(getData(1,3)) + 1) << " exhaustion" <<endl;
+        cout << "2 - " << getData(2, stoi(getData(1,5))) << " with " << getData(1,6) << "/" << getData(2,stoi(getData(1,5)) + 1) << " exhaustion" << endl;
+        cout << "3 - " << getData(2, stoi(getData(1,7))) << " with " << getData(1,8) << "/" << getData(2,stoi(getData(1,7)) + 1) << " exhaustion" << endl;
+        cout << "4 - " << getData(2, stoi(getData(1,9))) << " with " << getData(1,10) << "/" << getData(2,stoi(getData(1,9)) + 1) << " exhaustion" << endl;
         cout << "Q - Quit" << endl;
         cout << "Input 1 - 4 or Q: ";
 
@@ -37,7 +37,7 @@ void UseItem(int itemID) {
             int maxExaustion = stoi(getData(2, stoi(getData(1, 2 * animalIndex + 1)) + 1));
             if (itemID < 3) {
                 if (currentExaustion >= maxExaustion){
-                    cout << "This animal is fully exausted, you cannot use a treat on it." << endl;
+                    cout << "This animal is fully exhausted, you cannot use a treat on it." << endl;
                     presskey();
                 }
                 else if (itemID == 1) {
@@ -55,10 +55,11 @@ void UseItem(int itemID) {
                     saveData(smallTreatsStr, 11);
 
                     cout << "You used a small treat on " << getData(2, stoi(getData(1, 2 * animalIndex + 1))) << "!" << endl;
-                    cout << "It now has " << currentExaustion << "/" << maxExaustion << " exaustion." << endl;
+                    cout << "It now has " << currentExaustion << "/" << maxExaustion << " exhaustion." << endl;
                     cout << "You have " << smallTreats << " small treats left." << endl;
 
                     presskey();
+                    return 1;
                 }
                 else if (itemID == 2) {
                     currentExaustion -= 150;
@@ -75,10 +76,11 @@ void UseItem(int itemID) {
                     saveData(bigTreatsStr, 12);
 
                     cout << "You used a big treat on " << getData(2, stoi(getData(1, 2 * animalIndex + 1))) << "!" << endl;
-                    cout << "It now has " << currentExaustion << "/" << maxExaustion << " exaustion." << endl;
+                    cout << "It now has " << currentExaustion << "/" << maxExaustion << " exhaustion." << endl;
                     cout << "You have " << bigTreats << " big treats left." << endl;
                     
                     presskey();
+                    return 1;
                 }
             }
             else if (itemID == 3) {
@@ -91,15 +93,15 @@ void UseItem(int itemID) {
                 saveData(toysstr, 13);
 
                 cout << "You used a toy on " << getData(2, stoi(getData(1, 2 * animalIndex + 1))) << "!" << endl;
-                cout << "It now has " << currentExaustion << "/" << maxExaustion << " exaustion." << endl;
+                cout << "It now has " << currentExaustion << "/" << maxExaustion << " exhaustion." << endl;
                 cout << "You have " << toys << " toys left." << endl;
                     
                 presskey();
+                return 1;
             }
-
         }
         else if (choice = 'Q'){
-            break;
+            return 0;
         }
         else {
             cout << "Invalid input. " << endl;
@@ -107,10 +109,14 @@ void UseItem(int itemID) {
         }
 
     }
+
+    return 0;
 }
 
-void openInventory() {
+int openInventory(int fromgame) {
     while(true){
+        bool itemused;
+
         clearScreen();
         cout << "INVENTORY" << endl;
         cout << "1. Small Treats: " << getData(1, 11) << endl;
@@ -127,7 +133,8 @@ void openInventory() {
             cin >> itemChoice;
 
             if (itemChoice >= 1 && itemChoice <= 3 && stoi(getData(1, 10 + itemChoice)) > 0) {
-                UseItem(itemChoice);
+                itemused = UseItem(itemChoice, fromgame);
+                return 1;
             } else if (itemChoice >= 1 && itemChoice <= 3 && stoi(getData(1, 10 + itemChoice)) <= 0) {
                 cout << endl << "Invalid item choice. You do not posses any of that item.";
                 presskey();
@@ -138,7 +145,12 @@ void openInventory() {
             }
         }
         else if (choice == 'Q'){
-            break;
+            if (itemused == 1){
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
         else {
             cout << "Invalid choice. Please try again." << endl;
