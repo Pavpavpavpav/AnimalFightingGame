@@ -52,16 +52,16 @@ bool Opponent::isAnimalExausted(int animalIndex){
     return animalExaustion[animalIndex - 1] >= maxExhaustion;
 }
 
-bool isExausted(int id){
-    int exaustion = stoi(getData(1, 2 * id + 2));
-    int animalid = stoi(getData(1, 2 * id + 1));
-    int maxexaustion = stoi(getData(2, animalid + 1));
+bool isExausted(int animalid){
+    int exaustion = stoi(getData(1, 2 * animalid + 2));
+    int animalsaveid = stoi(getData(1, 2 * animalid + 1));
+    int maxexaustion = stoi(getData(2, animalsaveid + 1));
 
     if (exaustion >= maxexaustion){
-        return true;
+        return 1;
     }
     else {
-        return false;
+        return 0;
     }
 }
 
@@ -112,17 +112,7 @@ int gameround(){
         int maxexaustionopp = stoi(getData(2, oppanimalid + 1));
         string animalclassopp = getData(2, oppanimalid + 2);
         bool oppexausted = 0;
-
-        clearScreen();
-
-        if (usedturn == 0){
-            cout << "A turn did not pass. (placeholder)" << endl;
-            presskey();
-        }
-        else {
-            cout << "A turn has passed. (placeholder)" << endl;
-            presskey();
-        }
+        bool playerexausted = 0;
 
         clearScreen();
 
@@ -139,6 +129,8 @@ int gameround(){
         cin >> choice;
 
         usedturn = 0;
+        oppexausted = 0;
+        playerexausted = 0;
         clearScreen();
 
         if (choice == 'A'){
@@ -207,7 +199,6 @@ int gameround(){
             }
             else {
                 cout << "You have switched to your " << getData(2, selectedid) << "!" << endl;
-                cout << selectedidexh << " " << selectedidmexh;
                 curranimal = selection;
                 presskey();
                 usedturn = 1;
@@ -216,7 +207,96 @@ int gameround(){
             
         }
         
+        if (usedturn == 1){
+            clearScreen();
 
+            if (oppexausted == 1){
+                if (curranimalopp < opponent.getNumberofAnimals()){
+                    curranimalopp++;
+                    cout << "The opponent's " << getData(2, opponent.getAnimalID(curranimalopp)) << " replaces the exausted animal!" << endl;
+                    presskey();
+                }
+                else {
+                    return 1;
+                }
+            }
+            else {
+                int oppminhit = stoi(getData(2, oppanimalid + 3));
+                int oppmaxhit = stoi(getData(2, oppanimalid + 4));
+
+                uniform_int_distribution<int> hitfor(oppminhit, oppmaxhit);
+                int hit = hitfor(gen);
+
+                if (animalclassp == "Light" && animalclassopp == "Heavy" || animalclassp == "Medium" && animalclassopp == "Light" || animalclassp == "Heavy" && animalclassopp == "Medium"){
+                    hit = hit * .75;
+                    cout << "The " << animalclassopp << " " << oppanimalname << " exhausts the " << animalclassp << " " << playeranimalname << " less!" << endl;
+                }
+                else if (animalclassp == "Light" && animalclassopp == "Medium" || animalclassp == "Medium" && animalclassopp == "Heavy" || animalclassp == "Heavy" && animalclassopp == "Light"){
+                    hit = hit * 1.25;
+                    cout << "The " << animalclassopp << " " << oppanimalname << " exhausts the " << animalclassp << " " << playeranimalname << " more!" << endl;
+                }
+                exaustionp += hit;  
+
+                if (exaustionp > maxexaustionp){
+                    cout << "The opponent's " << oppanimalname << " dealt " << hit << " exhaustion to your " << playeranimalname << endl;
+                    cout << "Your " << playeranimalname << " has been exhausted." << endl;
+
+                    string exaustionpstr = to_string(maxexaustionp);
+                    saveData(exaustionpstr, 2 * curranimal + 2);
+                    playerexausted = 1;
+                }
+                else {
+                    cout << "The opponent's " << oppanimalname << " dealt " << hit << " exhaustion to your " << playeranimalname << endl;
+                    cout << "Your " << playeranimalname << " now has " << exaustionp << " exhaustion" << endl;
+                    
+                    string exaustionpstr = to_string(exaustionp);
+                    saveData(exaustionpstr, 2 * curranimal + 2); 
+                }
+
+                presskey();
+
+                if (playerexausted == 1){
+                    bool exausted1 = isExausted(1);
+                    bool exausted2 = isExausted(2);
+                    bool exausted3 = isExausted(3);
+                    bool exausted4 = isExausted(4);
+
+                    if (exausted1 == 1 && exausted2 == 1 && exausted3 == 1 && exausted4 == 1){
+                        return 0;
+                    }
+                    else {
+                        while (true){
+                            clearScreen();
+                            
+                            cout << "Your animal has been exausted, please select another one!" << endl;
+                            cout << "1. - " << getData(2, stoi(getData(1,3))) << " with " << getData(1,4) << "/" << getData(2,stoi(getData(1,3))+1) << " exhaustion" << endl;
+                            cout << "2. - " << getData(2, stoi(getData(1,5))) << " with " << getData(1,6) << "/" << getData(2,stoi(getData(1,5))+1) << " exhaustion" << endl;
+                            cout << "3. - " << getData(2, stoi(getData(1,7))) << " with " << getData(1,8) << "/" << getData(2,stoi(getData(1,7))+1) << " exhaustion" << endl;
+                            cout << "4. - " << getData(2, stoi(getData(1,9))) << " with " << getData(1,10) << "/" << getData(2,stoi(getData(1,9))+1) << " exhaustion" << endl;
+            
+                            int selection;
+                            cin >> selection;
+            
+                            int selectedid = stoi(getData(1, 2*selection +1));
+                            int selectedidexh = stoi(getData(1, 2*selection + 2));
+                            int selectedidmexh = stoi(getData(2, selectedid + 1));
+
+                            clearScreen();
+                            if (selectedidexh >= selectedidmexh){
+                                 cout << "You cannot switch to a fully exhausted animal!" << endl;
+                                    presskey();
+                            }
+                            else {
+                                cout << "You have switched to your " << getData(2, selectedid) << "!" << endl;
+                                curranimal = selection;
+                                presskey();
+                                break;
+                            }   
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

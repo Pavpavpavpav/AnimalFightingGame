@@ -295,6 +295,7 @@ int main(){
     while(true){
         clearScreen();
         cout << "INTERMISSION" << endl;
+        cout << "You have: " << getData(1,2) << " wins!" << endl;
         cout << "Please select an option: " << endl;
         cout << "P - Go into a play-off with your animals" << endl;
         cout << "I - Open inventory" << endl;
@@ -304,7 +305,28 @@ int main(){
         cin >> choice;
 
         if (choice == 'P'){
-            gameround();
+            int win = gameround();
+
+            if (win == 1){
+                clearScreen();
+
+                int wins = stoi(getData(1,2));
+                wins++;
+                string winsstr = to_string (wins);
+                saveData(winsstr, 2);
+                cout << "Congratulations on your win!" << endl;
+                cout << "You now have: " << wins << " wins" << endl;
+                cout << "Press any key to continue..." << endl;
+                cin.get();
+            }
+            else {
+                cout << "You have lost!" << endl;
+                cout << "You had a win streak of: " << getData(1,2) << " wins" << endl;
+                cout << "Delete ur save (GameSave.txt) to restart!" << endl;
+                cout << "Press any key to continue..." << endl;
+                cin.get();
+                return 0;
+            }
         }
         else if (choice == 'I'){
             openInventory(0);
