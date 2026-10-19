@@ -51,7 +51,7 @@ void fileCheck(){
         int id3 = stoi(getData(1,7));
         int id4 = stoi(getData(1,9));
 
-        if (id1 % 5 != 1 || id2 % 5 != 1 || id3 % 5 != 1 || id4 % 5 != 1 ){
+        if (id1 % 5 != 1 && id1 != 0 || id2 % 5 != 1 && id2 != 0 || id3 % 5 != 1 && id3 != 0 || id4 % 5 != 1 && id4 != 0){
             cout << "ERROR! One of the animal id's in GameSave.txt is incorrect!" << endl;
             cout << "Press any key to continue..." << endl;
             cin.get();
