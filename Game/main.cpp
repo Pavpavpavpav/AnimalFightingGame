@@ -5,6 +5,7 @@
 #include <random>
 #include <sstream>
 #include <filesystem>
+#include <cstdlib>
 #include "filesystem.h"
 #include "battlesequence.h"
 #include "inventorysystem.h"
@@ -18,7 +19,11 @@ void presskey() {
 }
 
 void clearScreen() {
-    cout << "\033[2J" << flush;
+    #ifdef _WIN32
+    system("cls");
+    #else
+    cout << "\033[2J\033[H" << flush;
+    #endif
 }
 
 bool isNumber(string& str){
