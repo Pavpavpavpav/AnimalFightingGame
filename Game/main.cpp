@@ -10,7 +10,24 @@
 #include "battlesequence.h"
 #include "inventorysystem.h"
 
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+
 using namespace std;
+
+void enableAnsi() {
+#ifdef _WIN32
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD mode = 0;
+    if (GetConsoleMode(h, &mode)) {
+        SetConsoleMode(h, mode | 0x0004);
+    }
+#endif
+}
+
 
 void presskey() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
